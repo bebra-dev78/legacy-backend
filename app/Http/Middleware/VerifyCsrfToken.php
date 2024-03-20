@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'kernel.tradify.su/*', // Замените это на свой домен бэкенда
     ];
+    
 }
