@@ -19,7 +19,7 @@ class TradeController extends Controller
         $currentTime = Carbon::now()->timestamp * 1000;
 
         return response()->json(Trade::where('uid', $uid)
-            ->where('entry_time', '>=', $currentTime - 604800000)
+            ->where('entry_time', '>=', $currentTime - 864000000)
             ->where('entry_time', '<=', $currentTime)
             ->get()
             ->toArray());
@@ -38,32 +38,19 @@ class TradeController extends Controller
             ->paginate($request->input("pageSize")));
     }
 
-    public function analytics(Request $request)
+    public function time(Request $request)
     {
         $uid = $request->header('X-ABOBA-UID');
 
         if (!$uid) {
             abort(401);
         }
-
-        $startTime = $request->input('startTime');
-        $endTime = $request->input('endTime');
 
         return response()->json(Trade::where('uid', $uid)
-            ->where('entry_time', '>=', $startTime)
-            ->where('entry_time', '<=', $endTime)
+            ->where('entry_time', '>=', $request->input('startTime'))
+            ->where('entry_time', '<=', $request->input('endTime'))
+            ->orderBy('entry_time', 'asc')
             ->get()
             ->toArray());
-    }
-
-    public function journal(Request $request)
-    {
-        $uid = $request->header('X-ABOBA-UID');
-
-        if (!$uid) {
-            abort(401);
-        }
-
-        return response()->json([]);
     }
 }

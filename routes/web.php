@@ -18,9 +18,6 @@ Route::get('/overview', [TradeController::class, 'overview']);
 
 Route::get('/table', [TradeController::class, 'table']);
 
-Route::get('/analytics', [TradeController::class, 'analytics']);
-
-Route::get('/journal', [TradeController::class, 'journal']);
-
+Route::get('/time', [TradeController::class, 'time']);
 
 require __DIR__ . '/auth.php';
