@@ -18,11 +18,13 @@ class TradeController extends Controller
 
         $currentTime = Carbon::now()->timestamp * 1000;
 
-        return response()->json(Trade::where('uid', $uid)
+        $trades = Trade::where('uid', $uid)
             ->where('entry_time', '>=', $currentTime - 864000000)
             ->where('entry_time', '<=', $currentTime)
             ->get()
-            ->toArray());
+            ->toArray();
+
+        return response()->json($trades);
     }
 
     public function table(Request $request)
@@ -34,7 +36,6 @@ class TradeController extends Controller
         }
 
         return response()->json(Trade::where('uid', $uid)
-            ->orderBy('entry_time', 'desc')
             ->paginate($request->input("pageSize")));
     }
 
