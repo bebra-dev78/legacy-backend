@@ -21,6 +21,7 @@ class TradeController extends Controller
         $trades = Trade::where('uid', $uid)
             ->where('entry_time', '>=', $currentTime - 864000000)
             ->where('entry_time', '<=', $currentTime)
+            ->orderBy('entry_time', 'desc')
             ->get()
             ->toArray();
 
@@ -36,6 +37,7 @@ class TradeController extends Controller
         }
 
         return response()->json(Trade::where('uid', $uid)
+            ->orderBy('entry_time', 'desc')
             ->paginate($request->input("pageSize")));
     }
 
